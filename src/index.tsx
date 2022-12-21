@@ -3,14 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {RootStore} from "./stores/RootStore";
+import {routes} from "./routes";
+import {IWindow} from "./utils/interfaces";
+import {browserHistory, HistoryAdapter} from "mobx-state-router";
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+const rootStore = new RootStore(routes, (window as unknown as IWindow).initialState)
+const historyAdapter = new HistoryAdapter(rootStore.routerStore, browserHistory)
+historyAdapter.observeRouterStateChanges();
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <App rootStore={rootStore}/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
