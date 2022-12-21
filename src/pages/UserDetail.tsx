@@ -88,7 +88,6 @@ class UserDetail extends React.Component<IUserDetailProps> {
         );
     }
 }
-a
 export class UserDetailsStore extends BasePageStore {
     component = UserDetail;
     userFormData = {
